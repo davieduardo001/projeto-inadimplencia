@@ -1,47 +1,46 @@
 import streamlit as st
 import pandas as pd
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
-def render_limpeza(df):
-    st.header('Limpeza de Dados e Feature Engineering')
+# Renomeado para pré-processamento e expandido conforme README
+
+def render_pre_processamento(df):
+    st.header('Pré-processamento')
     st.markdown('''
-**Processo de limpeza realizado:**
-- Remoção de linhas com valores ausentes (missing values).
-- Ajuste de valores inconsistentes nas variáveis categóricas:
-    - `EDUCATION`: valores diferentes de 1, 2, 3 ou 4 foram substituídos por 4 ("outros/desconhecido").
-    - `MARRIAGE`: valores diferentes de 1, 2 ou 3 foram substituídos por 3 ("outros").
+O pré-processamento é uma etapa fundamental para preparar os dados antes da modelagem. Inclui tratamento de outliers, codificação de variáveis categóricas e escalonamento dos dados.
 
-**Feature Engineering (Engenharia de Atributos) aplicada:**
-- Criação da variável `FAIXA_IDADE` que categoriza os clientes em grupos de idade: 'Jovem' (até 29 anos), 'Adulto' (30-59), 'Idoso' (60+).
-- Criação da variável `PAGOU_TUDO` que indica se o cliente pagou o valor total da fatura nos últimos 6 meses.
-
-Essas transformações ajudam o modelo a identificar padrões mais facilmente e podem melhorar o desempenho da classificação.
+**Tópicos abordados:**
+- ◦ Tratamento de outliers (se necessário)
+- ◦ Codificação de variáveis categóricas
+- ◦ Escalonamento (StandardScaler ou MinMaxScaler)
 ''')
 
-    def clean_data(df):
-        df = df.copy()
-        # Remover linhas com valores ausentes
-        df = df.dropna()
-        # Corrigir EDUCATION
-        df['EDUCATION'] = df['EDUCATION'].apply(lambda x: x if x in [1,2,3,4] else 4)
-        # Corrigir MARRIAGE
-        df['MARRIAGE'] = df['MARRIAGE'].apply(lambda x: x if x in [1,2,3] else 3)
-        # Feature Engineering: criar faixa de idade
-        df['FAIXA_IDADE'] = pd.cut(df['AGE'], bins=[0,29,59,150], labels=['Jovem','Adulto','Idoso'])
-        # Feature Engineering: cliente pagou tudo nos últimos 6 meses?
-        bill_cols = [f'BILL_AMT{i}' for i in range(1,7)]
-        pay_cols = [f'PAY_AMT{i}' for i in range(1,7)]
-        df['PAGOU_TUDO'] = (df[pay_cols].sum(axis=1) >= df[bill_cols].sum(axis=1)).astype(int)
-        return df
+    st.subheader('1. Tratamento de outliers (se necessário)')
+    st.info('Esta etapa pode incluir a remoção ou ajuste de valores extremos. (Exemplo ilustrativo, ajuste conforme necessário para seu dataset)')
+    # Exemplo: Remover outliers em LIMIT_BAL (3 desvios padrão)
+    df_proc = df.copy()
+    lim = 3 * df_proc['LIMIT_BAL'].std()
+    media = df_proc['LIMIT_BAL'].mean()
+    df_proc = df_proc[(df_proc['LIMIT_BAL'] >= media - lim) & (df_proc['LIMIT_BAL'] <= media + lim)]
+    st.write(f'Após remoção de outliers em LIMIT_BAL: {df_proc.shape[0]} linhas restantes.')
 
-    df_clean = clean_data(df)
+    st.subheader('2. Codificação de variáveis categóricas')
+    st.info('Transforma variáveis categóricas em formato numérico para uso em modelos.')
+    df_proc['SEX'] = df_proc['SEX'].replace({1: 0, 2: 1})  # Exemplo: 0=masculino, 1=feminino
+    df_proc = pd.get_dummies(df_proc, columns=['EDUCATION', 'MARRIAGE'], drop_first=True)
+    st.write('Exemplo de dados após codificação:')
+    st.dataframe(df_proc.head())
 
-    st.write('Após limpeza e feature engineering:')
-    st.dataframe(df_clean.head())
-    st.subheader('Estatísticas Descritivas (Após Limpeza)')
-    st.write(df_clean.describe())
-    st.info(f'Foram removidas {len(df) - len(df_clean)} linhas com valores ausentes e corrigidos valores inconsistentes nas colunas EDUCATION e MARRIAGE.')
-    st.markdown('''
-**Explicação das novas variáveis:**
-- `FAIXA_IDADE`: Agrupa clientes por faixa etária, facilitando a análise de comportamento por idade.
-- `PAGOU_TUDO`: Indica (1 = sim, 0 = não) se o cliente pagou o valor total das faturas recentes, o que pode ser útil para prever inadimplência.
-''')
+    st.subheader('3. Escalonamento (StandardScaler ou MinMaxScaler)')
+    st.info('Padroniza ou normaliza variáveis numéricas para melhorar o desempenho dos modelos.')
+    scaler = st.radio('Escolha o tipo de escalonamento:', ['StandardScaler', 'MinMaxScaler'])
+    cols_num = ['LIMIT_BAL', 'AGE']
+    if scaler == 'StandardScaler':
+        scaled = StandardScaler().fit_transform(df_proc[cols_num])
+    else:
+        scaled = MinMaxScaler().fit_transform(df_proc[cols_num])
+    df_proc[cols_num] = scaled
+    st.write('Dados após escalonamento:')
+    st.dataframe(df_proc[cols_num].head())
+
+    st.success('Pré-processamento concluído!')

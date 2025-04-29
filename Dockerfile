@@ -1,5 +1,5 @@
 # Dockerfile para o Streamlit App de Previsão de Inadimplência
-FROM python:3.10-slim
+FROM python:3.13-slim
 
 # Evita prompts de interação
 ENV DEBIAN_FRONTEND=noninteractive

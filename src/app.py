@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from tabs.limpeza import render_limpeza
+from tabs.limpeza import render_pre_processamento
 from tabs.treino_teste import render_treino_teste
 from tabs.random_forest import render_random_forest
 from tabs.knn import render_knn
@@ -21,7 +21,7 @@ df_raw = load_data()
 TABS = [
     'Documentação',
     'Análise Exploratória',
-    'Limpeza',
+    'Pré-processamento',
     'Treino/Teste',
     'Modelos',
 ]
@@ -87,14 +87,13 @@ A curva ROC (Receiver Operating Characteristic) mostra a relação entre taxa de
 
 # --- Aba 2: Análise Exploratória ---
 with tabs[1]:
-    st.subheader('Dados Originais')
     render_dados_originais(df_raw)
     st.markdown('---')
     render_eda(df_raw)
 
-# --- Aba 3: Limpeza ---
+# --- Aba 3: Pré-processamento ---
 with tabs[2]:
-    render_limpeza(df_raw)
+    render_pre_processamento(df_raw)
 
 # --- Aba 4: Treino/Teste ---
 with tabs[3]:

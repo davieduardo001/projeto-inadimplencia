@@ -28,9 +28,14 @@ Prever a probabilidade de um cliente inadimplir (não pagar) no próximo mês, c
 
 ## Métodos
 - **Pré-processamento**:
-  - Limpeza de dados
-  - Análise exploratória (EDA)
+  - Análise Exploratória (EDA)
+    ◦ Estatísticas descritivas
+    ◦ Gráficos de distribuição (histogramas, boxplots)
+    ◦ Análise de correlação
   - Feature engineering
+    ◦ Tratamento de outliers (se necessário)
+    ◦ Codificação de variáveis categóricas
+    ◦ Escalonamento (StandardScaler ou MinMaxScaler)
 
 ## Modelos Implementados
 
