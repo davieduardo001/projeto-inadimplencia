@@ -1,7 +1,6 @@
 import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
-import pandas as pd
 from tabs.dados_originais import render_dados_originais
 
 def render_eda(df):
