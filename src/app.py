@@ -87,8 +87,6 @@ A curva ROC (Receiver Operating Characteristic) mostra a relação entre taxa de
 
 # --- Aba 2: Análise Exploratória ---
 with tabs[1]:
-    render_dados_originais(df_raw)
-    st.markdown('---')
     render_eda(df_raw)
 
 # --- Aba 3: Pré-processamento ---

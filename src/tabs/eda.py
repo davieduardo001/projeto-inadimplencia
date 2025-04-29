@@ -2,9 +2,11 @@ import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+from tabs.dados_originais import render_dados_originais
 
 def render_eda(df):
     st.header('Análise Exploratória (EDA)')
+
     st.markdown('''
 Esta aba permite explorar o dataset de forma interativa antes de qualquer modelagem. Aqui você pode:
 
@@ -14,11 +16,9 @@ Esta aba permite explorar o dataset de forma interativa antes de qualquer modela
 
 As opções de seleção de variáveis e tipo de gráfico permitem analisar diferentes aspectos dos dados de forma visual e intuitiva, ajudando a identificar padrões, tendências e possíveis problemas de qualidade nos dados.
 ''')
-    st.markdown('''
-◦ Estatísticas descritivas
-◦ Gráficos de distribuição (histogramas, boxplots)
-◦ Análise de correlação
-''')
+
+    render_dados_originais(df)
+    st.markdown('---')
 
     st.subheader('Estatísticas descritivas')
     st.write(df.describe())
@@ -34,6 +34,18 @@ As opções de seleção de variáveis e tipo de gráfico permitem analisar dife
     st.pyplot(fig)
 
     st.subheader('Análise de correlação')
+    st.markdown('''
+**O que é Análise de Correlação?**
+
+A análise de correlação avalia o grau de relação linear entre duas variáveis numéricas. O coeficiente de correlação varia de -1 a 1:
+- Valores próximos de 1 indicam forte correlação positiva (as variáveis crescem juntas).
+- Valores próximos de -1 indicam forte correlação negativa (uma cresce enquanto a outra diminui).
+- Valores próximos de 0 indicam pouca ou nenhuma relação linear.
+
+**O que é a Matriz de Correlação?**
+
+A matriz de correlação é uma tabela que mostra o coeficiente de correlação entre todas as variáveis numéricas do dataset. Cada célula da matriz indica o grau de relação linear entre um par de variáveis. Valores próximos de 1 ou -1 indicam forte relação, enquanto valores próximos de 0 indicam pouca ou nenhuma relação linear. O heatmap abaixo facilita a visualização dessas relações, destacando padrões e possíveis colinearidades.
+''')
     corr = df.corr()
     fig_corr, ax_corr = plt.subplots(figsize=(8, 5))
     sns.heatmap(corr, annot=False, cmap='coolwarm', ax=ax_corr)
