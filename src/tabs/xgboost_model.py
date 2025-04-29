@@ -1,6 +1,6 @@
 import streamlit as st
 from xgboost import XGBClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, roc_auc_score, RocCurveDisplay, precision_score, recall_score
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, roc_auc_score, RocCurveDisplay, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
 
 
@@ -41,13 +41,15 @@ XGBoost (Extreme Gradient Boosting) é um dos algoritmos de aprendizado de máqu
         st.pyplot(fig_cm)
         st.caption('A matriz de confusão mostra como o modelo está errando e acertando as classes.')
 
-        # 2. Precision e Recall
-        st.subheader('Precision e Recall')
+        # 2. Precision, Recall, F1-score
+        st.subheader('Precision, Recall e F1-score')
         precision = precision_score(y_test, y_pred, zero_division=0)
         recall = recall_score(y_test, y_pred, zero_division=0)
+        f1 = f1_score(y_test, y_pred, zero_division=0)
         st.write(f'**Precisão (Precision):** {precision:.2%}')
         st.write(f'**Recall (Sensibilidade):** {recall:.2%}')
-        st.caption('Precisão: entre todas as previsões positivas, quantas realmente eram positivas.\nRecall: entre todas as amostras realmente positivas, quantas o modelo identificou corretamente.')
+        st.write(f'**F1-score:** {f1:.2%}')
+        st.caption('Precisão: entre todas as previsões positivas, quantas realmente eram positivas.\nRecall: entre todas as amostras realmente positivas, quantas o modelo identificou corretamente.\nF1-score: média harmônica entre precisão e recall, útil para datasets desbalanceados.')
 
         # 3. Curva ROC e AUC
         st.subheader('Curva ROC e AUC')
