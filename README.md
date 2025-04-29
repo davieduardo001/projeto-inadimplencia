@@ -42,7 +42,7 @@ Prever a probabilidade de um cliente inadimplir (não pagar) no próximo mês, c
 O aplicativo permite comparar diferentes algoritmos de classificação de inadimplência:
 - **Random Forest**
 - **KNN (K-Nearest Neighbors)**
-- **Naive Bayes**
+- **Regressão Logística**
 
 Cada modelo pode ser treinado e avaliado separadamente na aba "Modelos" do dashboard.
 

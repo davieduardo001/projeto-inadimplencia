@@ -17,7 +17,7 @@ A divisão dos dados em conjuntos de treino e teste é uma etapa fundamental em 
 
 > **Resumo:** Separar os dados dessa forma é considerado uma boa prática em projetos de ciência de dados e aprendizado de máquina, ajudando a garantir resultados mais confiáveis e generalizáveis.
 ''')
-    train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
+    train_df, test_df = train_test_split(df, test_size=0.3, random_state=42)
     col1, col2 = st.columns(2)
     with col1:
         st.metric('Linhas de treino', train_df.shape[0])

@@ -5,8 +5,9 @@ from tabs.treino_teste import render_treino_teste
 from tabs.random_forest import render_random_forest
 from tabs.knn import render_knn
 from tabs.eda import render_eda
-from tabs.naive_bayes import render_naive_bayes
+from tabs.logistic_regression import render_logistic_regression
 from tabs.docs import render_doc
+from tabs.naive_bayes import render_naive_bayes
 
 st.set_page_config(page_title='Credit Card Default - UCI')
 st.title('Análise de Inadimplência - UCI Credit Card')
@@ -47,10 +48,12 @@ with tabs[3]:
 # --- Aba 5: Modelos ---
 with tabs[4]:
     st.header('Modelos de Classificação')
-    model_tabs = st.tabs(['Random Forest', 'KNN', 'Naive Bayes'])
+    model_tabs = st.tabs(['Random Forest', 'KNN', 'Regressão Logística', 'Naive Bayes'])
     with model_tabs[0]:
         render_random_forest(train_df, test_df)
     with model_tabs[1]:
         render_knn(train_df, test_df)
     with model_tabs[2]:
+        render_logistic_regression(train_df, test_df)
+    with model_tabs[3]:
         render_naive_bayes(train_df, test_df)
