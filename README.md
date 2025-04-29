@@ -43,6 +43,7 @@ O aplicativo permite comparar diferentes algoritmos de classificação de inadim
 - **Random Forest**
 - **KNN (K-Nearest Neighbors)**
 - **Regressão Logística**
+- **XGBoost**
 
 Cada modelo pode ser treinado e avaliado separadamente na aba "Modelos" do dashboard.
 
