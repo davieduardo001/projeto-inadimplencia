@@ -62,6 +62,23 @@ pip install -r requirements.txt
 streamlit run src/app.py
 ```
 
+## Deploy com Docker
+
+Você pode rodar o dashboard em qualquer ambiente com Docker:
+
+```bash
+# 1. Construa a imagem Docker
+docker build -t inadimplencia-app .
+
+# 2. (Opcional) Remova container antigo se necessário
+# docker rm -f inadimplencia-app
+
+# 3. Rode o container
+# O app estará disponível em http://localhost:8501
+
+docker run -d -p 8501:8501 --name inadimplencia-app inadimplencia-app
+```
+
 ## Saídas
 - Dashboard interativo no Streamlit
 - Visualização das métricas e comparação entre modelos
