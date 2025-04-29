@@ -32,25 +32,40 @@ Prever a probabilidade de um cliente inadimplir (não pagar) no próximo mês, c
   - Análise exploratória (EDA)
   - Feature engineering
 
-- **Modelos**:
-  - Aprendizado supervisionado (classificação)
-  - Comparação de algoritmos
+## Modelos Implementados
 
-## Métricas
-- Matriz de confusão
-- AUC-ROC
-- Precision/Recall
+O aplicativo permite comparar diferentes algoritmos de classificação de inadimplência:
+- **Random Forest**
+- **KNN (K-Nearest Neighbors)**
+- **Naive Bayes**
+
+Cada modelo pode ser treinado e avaliado separadamente na aba "Modelos" do dashboard.
+
+## Métricas de Avaliação
+
+O dashboard apresenta as principais métricas para avaliação dos modelos:
+
+### Matriz de Confusão
+Tabela que mostra os acertos e erros do modelo, separando Verdadeiros Positivos (VP), Falsos Positivos (FP), Verdadeiros Negativos (VN) e Falsos Negativos (FN). Útil para visualizar tipos de erro.
+
+### Precision e Recall
+- **Precisão (Precision):** Proporção de previsões positivas que realmente eram positivas.
+- **Recall (Sensibilidade):** Proporção de positivos reais que o modelo conseguiu identificar.
+
+### Curva ROC e AUC
+- **Curva ROC:** Mostra a relação entre taxa de verdadeiros positivos e falsos positivos.
+- **AUC:** Mede a capacidade do modelo em distinguir entre as classes (quanto mais próximo de 1, melhor).
 
 ## Como Usar
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
+streamlit run src/app.py
 ```
 
 ## Saídas
-- Notebook Jupyter com análise completa
 - Dashboard interativo no Streamlit
+- Visualização das métricas e comparação entre modelos
 
-![Exemplo de Visualização](image.png)
+![Exemplo de Visualização](./src/images/image.png)
 
-- normalizacao eh feita automatica
+*Normalização dos dados é feita automaticamente durante o pipeline.*
