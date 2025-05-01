@@ -1,125 +1,262 @@
-# Projeto de Previsão de Inadimplência em Cartões de Crédito
+# Projeto Acadêmico: Previsão de Inadimplência em Cartões de Crédito
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)  
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-orange)](https://streamlit.io)
 
 ---
 
-## 💡 Sobre o Projeto
-Este projeto é um dashboard interativo desenvolvido em Python com Streamlit para comparar e visualizar diferentes modelos de machine learning aplicados à inadimplência de cartões de crédito. O objetivo principal é facilitar o estudo inicial de Ciência de Dados, permitindo ao usuário explorar, treinar e comparar modelos de forma prática e visual.
+## 1. Introdução
+
+Este projeto visa o desenvolvimento de uma aplicação interativa em Python, utilizando a biblioteca Streamlit, para análise e comparação de modelos de aprendizado de máquina aplicados à previsão de inadimplência em cartões de crédito. A aplicação tem como objetivo didático de finalizar a atividade de aprendizado de máquina, para que os estudantes explorarem conceitos fundamentais de análise exploratória de dados (EDA), pré-processamento, modelagem preditiva e avaliação de desempenho.
 
 ---
 
-## 📊 Objetivo
-O foco do projeto é a comparação entre modelos de classificação para fins didáticos e exploratórios, servindo como ponto de partida para estudos em Ciência de Dados.
+## 2. Objetivos
+
+- Explorar estatísticas e padrões do conjunto de dados de inadimplência de clientes de cartão de crédito.
+- Implementar diferentes algoritmos de classificação.
+- Comparar os desempenhos dos modelos com base em métricas específicas.
+- Disponibilizar uma aplicação interativa para fins educacionais.
 
 ---
 
-## 📁 Dataset
-**Fonte:** [Default of Credit Card Clients (Kaggle)](https://www.kaggle.com/datasets/uciml/default-of-credit-card-clients-dataset)
+## 3. Dataset
 
-O dataset contém informações demográficas, histórico de pagamentos e limites de crédito de clientes.
+### Origem
 
-### Principais Variáveis
-| Variável | Descrição | Valores/Formato |
-|----------|-----------|-----------------|
-| ID | Identificação do cliente | Número único |
-| LIMIT_BAL | Limite de crédito | NT$ (inclui crédito individual e familiar) |
-| SEX | Gênero | 1=masculino, 2=feminino |
-| EDUCATION | Escolaridade | 1=pós-graduação, 2=universitário, 3=ensino médio, 4=outros, 5-6=desconhecido |
-| MARRIAGE | Estado civil | 1=casado, 2=solteiro, 3=outros |
-| AGE | Idade | Anos completos |
-| PAY_0 a PAY_6 | Status de pagamento (-1 a 9) | -1=pago em dia, 1=atraso 1 mês, ..., 9=atraso ≥9 meses |
-| BILL_AMT1 a BILL_AMT6 | Valor da fatura | NT$ (últimos 6 meses) |
-| PAY_AMT1 a PAY_AMT6 | Valor pago | NT$ (últimos 6 meses) |
-| default.payment.next.month | Inadimplência | 0=não, 1=sim |
+A **Análise de Inadimplência - UCI Credit Card** refere-se a um estudo baseado no conjunto de dados **[Default of Credit Card Clients](https://www.kaggle.com/datasets/uciml/default-of-credit-card-clients-dataset)**, disponibilizado pelo **UCI Machine Learning Repository**.
 
-*PAY_0 refere-se a setembro/2005, PAY_1 a agosto/2005, ..., PAY_6 a abril/2005*
+### Descrição
 
----
+O dataset contém informações financeiras e socioeconômicas de **30 mil clientes** de cartões de crédito, incluindo:
 
-## ⚙️ Pipeline e Funcionalidades
-- **Análise Exploratória (EDA):**
-  - Estatísticas descritivas
-  - Gráficos de distribuição e correlação
-- **Pré-processamento:**
-  - Tratamento de outliers
-  - Codificação de variáveis categóricas
-  - Normalização/Escalonamento
-- **Modelagem:**
-  - Treinamento e avaliação de múltiplos modelos
-  - Comparação visual de métricas
+- Limite de crédito
+- Idade
+- Histórico de pagamentos (últimos 6 meses)
+- Valores faturados mensalmente
+- Valores pagos mensalmente
+- Dados demográficos (sexo, escolaridade, estado civil)
+
+A variável-alvo (`default.payment.next.month`) indica se o cliente entrou ou não em inadimplência no mês seguinte.
+
+### Estrutura das Variáveis
+
+| Variável | Descrição |
+|----------|-----------|
+| `LIMIT_BAL` | Limite de crédito concedido (NT$) |
+| `SEX`, `EDUCATION`, `MARRIAGE` | Variáveis demográficas codificadas |
+| `AGE` | Idade do cliente |
+| `PAY_0` a `PAY_6` | Histórico de pagamento (últimos 6 meses) |
+| `BILL_AMT1` a `BILL_AMT6` | Valor das faturas mensais |
+| `PAY_AMT1` a `PAY_AMT6` | Valor pago nos meses correspondentes |
+| `default.payment.next.month` | Variável-alvo (0 = adimplente, 1 = inadimplente) |
 
 ---
 
-## 🤖 Modelos Implementados
-- Random Forest
-- KNN (K-Nearest Neighbors)
-- Regressão Logística
-- XGBoost
+## 4. Metodologia
 
-Cada modelo pode ser treinado e avaliado separadamente na aba "Modelos" do dashboard.
+### 4.1 Análise Exploratória de Dados (EDA)
 
-![alt text](src/images/image4.png)
+#### Principais Insights do EDA
+
+1. **Limite de Crédito vs Inadimplência**  
+Correlação negativa com a inadimplência: limites mais altos tendem a reduzir o risco.
+
+2. **Idade e Pontualidade**  
+Clientes mais velhos costumam ser mais pontuais nos pagamentos.
+
+3. **Consistência nos Gastos**  
+Alta correlação entre os valores de fatura dos meses, indicando padrão estável de consumo.
+
+4. **Educação como Indicador Secundário**  
+Leve correlação com inadimplência, mas pouco significativa isoladamente.
+
+5. **Histórico de Pagamento**  
+Atrasos são fortemente preditivos de futuros atrasos.
+
+6. **Pagamentos Realizados**  
+Fraca correlação com a inadimplência, sugerindo menor valor preditivo.
+
+### 4.2 Pré-processamento
+
+- Divisão dos dados em treino e teste (80/20)
+- Seleção de features (excluindo ID e target)
+
+### 4.3 Modelagem Preditiva
+
+Modelos aplicados:
+
+| Modelo | Descrição | Vantagens |
+|--------|-----------|-----------|
+| **Regressão Logística** | Modelo estatístico linear | Simples, interpretável |
+| **Random Forest** | Conjunto de árvores de decisão | Robusto, bom para não-linearidades |
+| **KNN** | Classificação baseada em vizinhos | Fácil de implementar |
+| **XGBoost** | Técnica de boosting com regularização | Alta performance e escalabilidade |
 
 ---
 
-## 📏 Métricas de Avaliação
-- **Matriz de Confusão:** Visualização dos acertos e erros do modelo
-- **Precisão (Precision):** Proporção de previsões positivas corretas
-- **Recall (Sensibilidade):** Proporção de positivos reais identificados
-- **F1-score:** Média harmônica entre precisão e recall, especialmente útil para datasets desbalanceados
-- **Curva ROC & AUC:** Avaliação da capacidade do modelo em distinguir classes
+## 5. Avaliação dos Modelos
+
+### 5.1 Métricas de Desempenho
+
+1. **Acurácia**
+   - Proporção de previsões corretas em relação ao total
+   - Não é suficiente para datasets desbalanceados
+   - Calculada como: (TP + TN) / (TP + TN + FP + FN)
+
+2. **Precisão**
+   - Proporção de previsões positivas corretas
+   - Importante para minimizar falsos positivos
+   - Calculada como: TP / (TP + FP)
+
+3. **Recall (Sensibilidade)**
+   - Proporção de positivos reais identificados
+   - Importante para identificar todos os casos positivos
+   - Calculada como: TP / (TP + FN)
+
+4. **F1-Score**
+   - Média harmônica entre Precisão e Recall
+   - Balanceia os dois aspectos
+   - Calculada como: 2 * (Precision * Recall) / (Precision + Recall)
+
+### 5.2 Visualizações de Desempenho
+
+1. **Matriz de Confusão**
+   - Mostra os acertos e erros do modelo
+   - Indica:
+     - Verdadeiros Positivos (TP)
+     - Verdadeiros Negativos (TN)
+     - Falsos Positivos (FP)
+     - Falsos Negativos (FN)
+
+2. **Curva ROC e AUC**
+   - Avalia a capacidade do modelo em distinguir classes
+   - ROC: Gráfico de True Positive Rate vs False Positive Rate
+   - AUC: Área sob a curva ROC
+   - Valores próximos de 1 indicam melhor desempenho
+
+### 5.3 Importância das Métricas no Contexto
+
+- **Precisão**: Importante para evitar aprovação de clientes inadimplentes
+- **Recall**: Crítico para identificar o máximo possível de inadimplentes
+- **F1-Score**: Balanceia precisão e recall, útil para datasets desbalanceados
+- **AUC-ROC**: Indica capacidade geral do modelo em distinguir classes
 
 ---
 
-## 🚀 Como Rodar o Projeto
+## 6. Conclusões
 
-### 1. Usando Docker Compose (Recomendado)
+Claro! Aqui está uma versão revisada e mais acadêmica das **conclusões** do seu projeto:
+
+---
+
+## 6. Conclusões
+
+A análise realizada evidencia padrões relevantes de comportamento de crédito, com implicações diretas para estratégias de mitigação de risco. Os principais achados são:
+
+1. **Histórico de pagamento como fator determinante**  
+Variáveis relacionadas a atrasos anteriores (PAY_0 a PAY_6) mostraram-se os principais preditores de inadimplência futura, indicando que padrões de comportamento são fortemente recorrentes.
+
+2. **Perfil do cliente impacta o risco**  
+Características demográficas como idade e limite de crédito apresentaram correlação inversa com inadimplência. Clientes mais velhos e com limites mais elevados tendem a apresentar menor propensão ao atraso.
+
+3. **Educação e padrão de gastos contribuem de forma secundária**  
+Embora menos preditivas isoladamente, variáveis como escolaridade e consistência no valor das faturas ajudam a compor um perfil mais completo do comportamento do cliente.
+
+4. **Modelos de boosting demonstram maior desempenho preditivo**  
+O modelo XGBoost superou os demais em métricas como F1-score e AUC, evidenciando a eficácia de técnicas baseadas em ensemble e regularização para problemas com dados desbalanceados.
+
+---
+
+## 7. Aplicação Interativa
+
+A aplicação permite:
+
+- Explorar visualmente os dados e os principais insights
+- Treinar e comparar modelos
+- Avaliar o desempenho de forma interativa
+
+---
+
+## 8. Como Executar
+
+### 1. Via Docker (Recomendado)
+
+#### 1.1 Usando Docker Compose (Recomendado)
 ```bash
 docker compose up --build
 ```
-Acesse: http://localhost:8501
 
-### 2. Usando Docker (Manual)
+#### 1.2 Construção e Execução Manual (Alternativa)
 ```bash
+# Construir a imagem
 docker build -t inadimplencia-app .
+
+# Executar o container
 docker run -d -p 8501:8501 --name inadimplencia-app inadimplencia-app
 ```
-Acesse: http://localhost:8501
 
-### 3. Usando Ambiente Virtual Python
+> **Nota:** Acesse a aplicação em http://localhost:8501 após a execução.
+
+### 2. Manualmente com Python
+
+#### 2.1 Usando Ambiente Virtual (Recomendado)
+
+##### Para Linux/MacOS
 ```bash
+# Criar ambiente virtual
 python3 -m venv .venv
+
+# Ativar ambiente virtual
 source .venv/bin/activate
+
+# Instalar dependências
 pip install -r requirements.txt
+
+# Executar a aplicação
 streamlit run src/app.py
 ```
-Acesse: http://localhost:8501
+
+##### Para Windows
+```cmd
+# Criar ambiente virtual
+python -m venv .venv
+
+# Ativar ambiente virtual
+.venv\Scripts\activate
+
+# Instalar dependências
+pip install -r requirements.txt
+
+# Executar a aplicação
+streamlit run src/app.py
+```
+
+> **Nota:** No Windows, use `python` em vez de `python3` e o comando de ativação é diferente.
+
+#### 2.2 Instalação Direta (Não Recomendado)
+```bash
+# Instalar dependências globalmente
+pip install -r requirements.txt
+
+# Executar a aplicação
+streamlit run src/app.py
+```
+
+> **Nota:** A utilização de ambiente virtual é fortemente recomendada para evitar conflitos com outras instalações Python no sistema.
 
 ---
 
-## 🖥️ Estrutura do Projeto
-```
-projeto_de_merda_n2/
+## 9. Estrutura do Projeto
+
+```txt
+inadimplencia-streamlit/
 ├── src/
-│   ├── app.py               # Código principal do Streamlit
-│   ├── tabs/                # Módulos de cada aba (EDA, modelos, etc)
-│   └── data/                # Base de dados CSV
-├── requirements.txt         # Dependências Python
-├── Dockerfile               # Dockerfile para build da imagem
-├── docker-compose.yml       # Orquestração com Docker Compose
+│   ├── app.py
+│   ├── tabs/
+│   └── data/
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
 └── README.md
 ```
-
----
-
-## 📈 Saídas
-- Dashboard interativo no Streamlit
-- Visualização das métricas e comparação entre modelos
-
-![alt text](src/images/image1.png)
-![alt text](src/images/image2.png)
-![alt text](src/images/image3.png)
-
----
