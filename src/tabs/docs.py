@@ -54,4 +54,6 @@ A curva ROC (Receiver Operating Characteristic) mostra a relação entre taxa de
 - **AUC = 1:** Modelo perfeito
 - **AUC = 0.5:** Modelo aleatório
 - **Quanto mais próximo de 1, melhor**
+
+> Deploy feito com 🐳 e 🐍
 ''')
