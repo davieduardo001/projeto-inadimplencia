@@ -180,23 +180,9 @@ A aplicação permite:
 
 ## 8. Como Executar
 
-### 1. Via Docker (Recomendado)
+A aplicação pode ser executada localmente, utilizando o comando `docker pull davieduardocosta001/projeto-inadiplencia` e em seguida `docker run -p 8501:8501 davieduardocosta001/projeto-inadiplencia`.
 
-#### 1.1 Usando Docker Compose (Recomendado)
-```bash
-docker compose up --build
-```
-
-#### 1.2 Construção e Execução Manual (Alternativa)
-```bash
-# Construir a imagem
-docker build -t inadimplencia-app .
-
-# Executar o container
-docker run -d -p 8501:8501 --name inadimplencia-app inadimplencia-app
-```
-
-> **Nota:** Acesse a aplicação em http://localhost:8501 após a execução.
+Também está disponível em [https://projeto-inadiplencia.onrender.com/](https://projeto-inadiplencia.onrender.com/) (pode demorar um pouco para carregar).
 
 ### 2. Manualmente com Python
 
