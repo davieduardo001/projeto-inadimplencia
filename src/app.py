@@ -57,3 +57,5 @@ with tabs[4]:
         render_logistic_regression(train_df, test_df)
     with model_tabs[3]:
         render_xgboost(train_df, test_df)
+
+st.markdown('Deploy feito com 🐳')
