@@ -18,3 +18,8 @@ build-and-push:
     - docker build -t "$IMAGE_NAME:latest" .
     - docker push "$IMAGE_NAME:latest"
     - docker logout
+
+deploy-to-render:
+  stage: deploy
+  script:
+    - curl -X POST "$RENDER_DEPLOY_HOOK"
