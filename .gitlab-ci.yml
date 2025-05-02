@@ -32,6 +32,3 @@ push:
     - master
   dependencies:
     - build
-
-after_script:
-  - docker logout
