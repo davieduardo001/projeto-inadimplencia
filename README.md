@@ -146,12 +146,6 @@ Modelos aplicados:
 
 ## 6. Conclusões
 
-Claro! Aqui está uma versão revisada e mais acadêmica das **conclusões** do seu projeto:
-
----
-
-## 6. Conclusões
-
 A análise realizada evidencia padrões relevantes de comportamento de crédito, com implicações diretas para estratégias de mitigação de risco. Os principais achados são:
 
 1. **Histórico de pagamento como fator determinante**  
@@ -184,9 +178,9 @@ A aplicação pode ser executada localmente, utilizando o comando `docker pull d
 
 Também está disponível em [https://projeto-inadiplencia.onrender.com/](https://projeto-inadiplencia.onrender.com/) (pode demorar um pouco para carregar).
 
-### 2. Manualmente com Python
+### Manualmente com Python
 
-#### 2.1 Usando Ambiente Virtual (Recomendado)
+#### Usando Ambiente Virtual (Recomendado)
 
 ##### Para Linux/MacOS
 ```bash
@@ -220,7 +214,7 @@ streamlit run src/app.py
 
 > **Nota:** No Windows, use `python` em vez de `python3` e o comando de ativação é diferente.
 
-#### 2.2 Instalação Direta (Não Recomendado)
+#### Instalação Direta (Não Recomendado)
 ```bash
 # Instalar dependências globalmente
 pip install -r requirements.txt
