@@ -58,4 +58,4 @@ with tabs[4]:
     with model_tabs[3]:
         render_xgboost(train_df, test_df)
 
-st.markdown('Deploy feito com 🐳')
+st.markdown('Deploy feito com 🐳 e 🐍')
